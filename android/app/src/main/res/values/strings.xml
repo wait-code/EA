@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EnglishAssistant</string>
+    <string name="library_title">试卷库</string>
+    <string name="import_epak">导入试卷包</string>
+    <string name="empty_library">还没有试卷\n点右下角「导入」选择 .epak 文件</string>
+    <string name="settings">设置</string>
+    <string name="delete">删除</string>
+    <string name="back">返回</string>
+</resources>
