@@ -1,0 +1,6 @@
+# Cloudflare Workers 静态站点配置（ExamReader 下载页）
+name = "ea-site"
+compatibility_date = "2026-10-18"
+
+# 静态资源：本站目录即 site/
+assets = { directory = ".", not_found_handling = "404-page" }

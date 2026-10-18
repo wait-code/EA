@@ -16,7 +16,6 @@ import com.examreader.data.StudyRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
 
 class ExamReaderApp : Application() {
     lateinit var database: AppDatabase
@@ -52,7 +51,6 @@ class ExamReaderApp : Application() {
             .crossfade(true)
             .build()
         createScanChannel()
-        backgroundScope.launch { examRepository.seedIfEmpty() }
     }
 
     private fun createScanChannel() {

@@ -46,3 +46,7 @@ android/.kotlin/
 # 不上传：CI 配置与仓库文档
 .github/
 docs/
+
+# Wrangler 本地缓存（含账号信息）
+site/.wrangler/
+

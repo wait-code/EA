@@ -48,7 +48,9 @@ async function main() {
   pass('已导出 framework/schema/exam.schema.json');
 
   const papers = findPapers(contentDir);
-  if (!papers.length) return fail('content/ 下没找到试卷 JSON');
+  if (!papers.length) {
+    console.log('  content/ 为空（默认无试卷），跳过试卷校验、编译与种子投放');
+  }
   console.log(`\n== 2. 逐份校验（${papers.length} 份） ==`);
   fs.mkdirSync(buildDir, { recursive: true });
   for (const file of papers) {
@@ -85,14 +87,6 @@ async function main() {
       (await import('../framework/src/compile.mjs')).compileExam(exam, { baseDir })
     ));
     pass(`   ${path.relative(repo, path.join(webDir, 'index.html'))}`);
-
-    // 同步进 App 种子包（只有主内容包会被投放）
-    const assets = path.join(repo, 'android', 'app', 'src', 'main', 'assets', 'seed.epak');
-    if (papers.length === 1) {
-      fs.mkdirSync(path.dirname(assets), { recursive: true });
-      fs.writeFileSync(assets, buffer);
-      pass(`   已投放 App 种子包 ${path.relative(repo, assets)}`);
-    }
   }
 
   console.log('\n== 3. Android 工程静态检查 ==');
@@ -103,8 +97,7 @@ async function main() {
     'android/app/src/main/AndroidManifest.xml',
     'android/gradle/wrapper/gradle-wrapper.jar',
     'android/gradle/wrapper/gradle-wrapper.properties',
-    'android/gradlew.bat',
-    'android/app/src/main/assets/seed.epak'
+    'android/gradlew.bat'
   ];
   for (const f of required) {
     if (fs.existsSync(path.join(repo, f))) pass(f);

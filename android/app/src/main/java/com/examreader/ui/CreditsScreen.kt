@@ -79,7 +79,6 @@ private val CREDITS = listOf(
     ),
     Credit(name = "通义千问", role = "扫描", url = "https://bailian.console.aliyun.com"),
     Credit(name = "DeepSeek", role = "分析", url = "https://platform.deepseek.com"),
-    Credit(name = "德阳五中 10 月自主测验(英语卷)", role = "!!!???!!!")
 )
 
 

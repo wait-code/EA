@@ -32,20 +32,8 @@ $sdkProp = $Sdk -replace '\\', '\\' -replace ':', '\:'
 Set-Content -LiteralPath (Join-Path $android 'local.properties') -Value "sdk.dir=$sdkProp" -Encoding ascii
 Write-Host "  已写 android/local.properties"
 
-if (-not $SkipContent) {
-  Write-Host "`n== 2/4 重新编译内容包（content → assets/seed.epak） ==" -ForegroundColor Cyan
-  $papers = Get-ChildItem -Path (Join-Path $repo 'content') -Recurse -Filter paper.json -ErrorAction SilentlyContinue
-  if (-not $papers) {
-    Write-Host "  content/ 下没有 paper.json，跳过（用现有 assets/seed.epak）" -ForegroundColor Yellow
-  } elseif ($papers.Count -gt 1) {
-    Write-Host "  发现多份试卷，只投放第一份；其余用 App 内「导入试卷包」" -ForegroundColor Yellow
-    & node (Join-Path $framework 'bin\exam.mjs') build $papers[0].FullName --target android
-  } else {
-    & node (Join-Path $framework 'bin\exam.mjs') build $papers[0].FullName --target android
-  }
-} else {
-  Write-Host "`n== 2/4 跳过内容编译 ==" -ForegroundColor DarkGray
-}
+Write-Host "`n== 2/4 内容包 ==" -ForegroundColor Cyan
+Write-Host "  默认工程无内置试卷（content/ 为空），跳过种子包编译与投放；如需内置，请用「导入试卷包」或 exam build --target android" -ForegroundColor DarkGray
 
 Write-Host "`n== 3/4 Gradle 构建 ==" -ForegroundColor Cyan
 Push-Location $android

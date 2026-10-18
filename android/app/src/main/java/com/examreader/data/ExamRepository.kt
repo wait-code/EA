@@ -38,16 +38,6 @@ class ExamRepository(
 
     suspend fun sectionSummaries(paperId: String): List<SectionSummary> = content.sections(paperId).map { it.toSummary() }
 
-    /** 首次启动：把 assets/seed.epak 装进库（用户自己的包也走同一条导入路径） */
-    suspend fun seedIfEmpty() {
-        if (content.paperCount() > 0) return
-        runCatching {
-            context.assets.open("seed.epak").use { stream ->
-                importEpak(stream.readBytes(), "内置示例包")
-            }
-        }
-    }
-
     suspend fun importFromUri(bytes: ByteArray, sourceLabel: String): ImportOutcome = importEpak(bytes, sourceLabel)
 
     suspend fun importEpak(bytes: ByteArray, sourceLabel: String): ImportOutcome = withContext(Dispatchers.IO) {
