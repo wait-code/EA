@@ -42,3 +42,7 @@ skills/
 android/build_compile.log
 android/build_compile_err.log
 android/.kotlin/
+
+# 不上传：CI 配置与仓库文档
+.github/
+docs/
